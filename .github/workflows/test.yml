@@ -1,29 +1,31 @@
+---
 name: Random Hash Test
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Run unit tests
-      run: |
-        python -m pytest test_random_hash.py -v || python -m unittest test_random_hash.py -v
-    
-    - name: Run random hash generator
-      run: |
-        python random_hash.py
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run unit tests
+        run: |
+          python -m pytest test_random_hash.py -v || \
+            python -m unittest test_random_hash.py -v
+
+      - name: Run random hash generator
+        run: |
+          python random_hash.py
