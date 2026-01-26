@@ -3,7 +3,9 @@
 Tests for random_hash.py
 """
 
+import io
 import unittest
+from contextlib import redirect_stdout
 from random_hash import generate_random_hash, find_hash_with_double_zero
 
 
@@ -48,6 +50,14 @@ class TestRandomHash(unittest.TestCase):
             self.assertIsNotNone(hash_value)
             self.assertTrue(hash_value.startswith("00"))
             self.assertEqual(len(hash_value), 32)
+
+    def test_find_hash_with_double_zero_log_every_zero(self):
+        """Test that log_every=0 suppresses per-attempt logging."""
+        buffer = io.StringIO()
+        with redirect_stdout(buffer):
+            find_hash_with_double_zero(max_attempts=5, log_every=0)
+        output = buffer.getvalue()
+        self.assertNotIn("Attempt ", output)
 
 
 if __name__ == "__main__":
