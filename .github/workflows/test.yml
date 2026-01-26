@@ -23,8 +23,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          python -m pytest test_random_hash.py -v || \
-            python -m unittest test_random_hash.py -v
+          python -m unittest test_random_hash.py -v
 
       - name: Run random hash generator
         run: |

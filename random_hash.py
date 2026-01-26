@@ -10,7 +10,11 @@ import string
 
 
 def generate_random_hash():
-    """Generate a random 32-character hash using MD5."""
+    """Generate a random 32-character hash using MD5.
+    
+    Note: MD5 is used here for demonstration purposes only.
+    For security-critical applications, use SHA-256 or stronger algorithms.
+    """
     # Generate a random string
     random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
     # Create MD5 hash
