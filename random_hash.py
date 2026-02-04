@@ -8,6 +8,8 @@ import hashlib
 import random
 import string
 
+ALPHANUMERIC_CHARACTERS = string.ascii_letters + string.digits
+
 
 def generate_random_hash():
     """Generate a random 32-character hash using MD5.
@@ -16,25 +18,27 @@ def generate_random_hash():
     For security-critical applications, use SHA-256 or stronger algorithms.
     """
     # Generate a random string
-    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+    random_string = ''.join(random.choices(ALPHANUMERIC_CHARACTERS, k=16))
     # Create MD5 hash
     hash_object = hashlib.md5(random_string.encode())
     return hash_object.hexdigest()
 
 
-def find_hash_with_double_zero(max_attempts=1000):
+def find_hash_with_double_zero(max_attempts=1000, log_every=100):
     """
     Generate random hashes until finding one that starts with "00".
     
     Args:
         max_attempts: Maximum number of attempts (default: 1000)
+        log_every: Print progress every N attempts (default: 100). Set to 0 to disable.
     
     Returns:
         tuple: (success: bool, hash: str or None, attempts: int)
     """
     for attempt in range(1, max_attempts + 1):
         hash_value = generate_random_hash()
-        print(f"Attempt {attempt}: {hash_value}")
+        if log_every and attempt % log_every == 0:
+            print(f"Attempt {attempt}: {hash_value}")
         
         if hash_value.startswith("00"):
             print(f"\nSuccess! Found hash starting with '00': {hash_value}")
